@@ -1,35 +1,109 @@
 <!DOCTYPE html>
-<html lang="zh">
-
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>Claire 的个人主页</title>
-    <style>
-        body {
-            font-family: Arial;
-            text-align: center;
-            background: #0f172a;
-            color: white;
-            padding: 50px;
-        }
-
-        .btn {
-            display: inline-block;
-            margin-top: 30px;
-            padding: 12px 24px;
-            background: #00ffff;
-            color: black;
-            text-decoration: none;
-            border-radius: 8px;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claire's Homepage</title>
+    <link rel="stylesheet" href="style.css">
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
-
 <body>
-    <h1>👋 欢迎来到我的网站</h1>
-    <p>这里是我的Vibe Game</p>
+    <div class="bg-animation"></div>
 
-    <a class="btn" href="/game/">🎮 进入《迷域行者》</a>
+    <div class="container">
+        <!-- 左侧导航栏 -->
+        <aside class="sidebar glass-panel">
+            <div class="profile">
+                <img src="avatar.jpg" alt="Claire" class="avatar" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI1MCIgZmlsbD0iI2VlZSIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBkeT0iLjNlbSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1zaXplPSI0MCIgZmlsbD0iIzk5OSI+QzwvdGV4dD48L3N2Zz4='">
+                <div class="email">mx8132@163.com</div>
+            </div>
+            <nav class="nav-menu">
+                <button class="nav-btn active" data-target="home">HOME</button>
+                <button class="nav-btn" data-target="projects">TOY PROJECTS</button>
+                <button class="nav-btn" data-target="blog">BLOG</button>
+            </nav>
+        </aside>
+
+        <!-- 右侧内容区 -->
+        <main class="content glass-panel">
+            
+            <!-- 首页模块 -->
+            <section id="home" class="section active">
+                <div class="intro">
+                    <h2>你好呀 👋 这是 maxu 的主页</h2>
+                    <p>多亏了21世纪AI的飞速进步，我的域名终于在尘封20年后得见天日！很幸运有你的见证～</p>
+                </div>
+
+                <div class="counter-box">
+                    <p>👀 你贡献了本站的第 <span id="busuanzi_value_site_pv" class="highlight-num">...</span> 次访问</p>
+                </div>
+
+                <div class="heatmap-container">
+                    <h3>Activity Map</h3>
+                    <!-- 使用开源 API 直接生成你的 GitHub 专属热力图，d9778c 是你网站的主题粉色 -->
+                    <div id="heatmap" class="heatmap">
+                        <img src="https://ghchart.rshah.org/d9778c/clairexma" alt="Claire's GitHub Activity" class="github-chart">
+                    </div>
+                </div>
+
+                <!-- 弹幕留言区 -->
+                <div class="danmaku-container">
+                    <div id="danmaku-screen" class="danmaku-screen"></div>
+                    <div class="input-area">
+                        <input type="text" id="message-input" placeholder="今天开心吗？">
+                        <button id="send-btn">发送</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 项目模块 -->
+            <section id="projects" class="section">
+                <h2>Toy Projects</h2>
+                <p class="subtitle">一些有趣的项目</p>
+                <div class="project-grid">
+                    
+                    <!-- 1. 你的真实游戏项目 -->
+                    <!-- href="game/index.html" 指向同目录下的 game 文件夹 -->
+                    <!-- target="_blank" 表示在新标签页打开，这样访客不会丢失你的主页 -->
+                    <a href="game/index.html" target="_blank" class="project-card">
+                        <div class="project-icon">🎮</div>
+                        <h3>Vibe Game 初体验</h3>
+                        <p>纯前端编写的双人合作游戏，点击试玩。</p>
+                    </a>
+
+                    <!-- 2. 预留的占位项目（以后有新项目可以直接复制修改） -->
+                    <a href="#" class="project-card">
+                        <div class="project-icon">🛠️</div>
+                        <h3>(待填坑)</h3>
+                        <p>(待灵感迸出)</p>
+                    </a>
+
+                    <!-- 3. 预留的占位项目
+                    <a href="#" class="project-card">
+                        <div class="project-icon">🎨</div>
+                        <h3>CSS 动效实验 (待填坑)</h3>
+                        <p>计划中：收集和复刻一些有趣的网页视觉交互。</p>
+                    </a> -->
+
+                </div>
+            </section>
+
+            <!-- 博客模块 -->
+            <section id="blog" class="section">
+                <h2>Blog</h2>
+                <p class="subtitle">人生在于折腾</p>
+                <div class="blog-list">
+                    <article class="blog-item">
+                        <span class="blog-date">yyyy-MM-dd</span>
+                        <h3><a href="#">还没写，有空来填</a></h3>
+                    </article>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
 </body>
-
 </html>
