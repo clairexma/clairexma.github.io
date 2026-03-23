@@ -170,30 +170,26 @@ body {
     color: var(--accent-color);
 }
 
-.heatmap-crop-box {
+.heatmap-container {
+    margin: 10px 0 15px 0; 
+    flex-shrink: 0;
     width: 100%;
-    height: 145px;
-    overflow-x: auto; /* 如果屏幕太小，允许左右滑动 */
-    overflow-y: hidden;
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.3); 
 }
-
-.leetcode-pure-heatmap {
-    width: 730px;
-    max-width: none;
+.heatmap-container h3 { 
+    font-size: 0.9rem; 
+    color: var(--text-light); 
+    margin: 0 0 8px 0;
+}
+.heatmap {
+    width: 100%;
+    overflow-x: auto; /* 如果屏幕太小，允许横向滑动查看完整热力图 */
+    padding-bottom: 5px;
+}
+.github-chart {
+    min-width: 600px; /* 保证热力图不会被挤压变形 */
     height: auto;
-    margin-top: -170px;
     display: block;
-    opacity: 0.95;
-}
-
-.heatmap-crop-box::-webkit-scrollbar {
-    height: 6px;
-}
-.heatmap-crop-box::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    opacity: 0.9; /* 稍微透明一点，更契合玻璃拟物风 */
 }
 
 /* 弹幕与留言 - 自动填满剩余空间 */

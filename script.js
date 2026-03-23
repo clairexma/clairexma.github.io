@@ -14,36 +14,128 @@ navBtns.forEach(btn => {
 });
 
 // 2. 访问计数器 & 烟花彩蛋
+const milestones = {
+    10:  { message: "✨ 我们迎来了第10位访客～", type: "small" },
+    50:  { message: "🎉 第50位访客！开始热闹了！", type: "medium" },
+    100: { message: "🔥 第100位访客！里程碑达成！", type: "big" },
+    520: { message: "💖 第520位访客！有点浪漫～", type: "pink" },
+    1000:{ message: "🚀 第1000位访客！爆炸庆祝！！", type: "ultimate" }
+};
+
+// 防止重复触发
+const triggeredSet = new Set();
+
+// ============================
+// 🔔 Toast 提示
+// ============================
+function showToast(message) {
+    let toast = document.getElementById('easter-toast');
+
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'easter-toast';
+        Object.assign(toast.style, {
+            position: 'fixed',
+            top: '30px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            padding: '14px 28px',
+            background: 'rgba(0,0,0,0.85)',
+            color: '#fff',
+            borderRadius: '10px',
+            fontSize: '16px',
+            zIndex: 9999,
+            transition: 'all 0.3s ease',
+            boxShadow: '0 0 20px rgba(0,0,0,0.4)'
+        });
+        document.body.appendChild(toast);
+    }
+
+    toast.innerText = message;
+    toast.style.opacity = '1';
+
+    setTimeout(() => {
+        toast.style.opacity = '0';
+    }, 2500);
+}
+
+// ============================
+// 🎆 烟花效果库
+// ============================
+function fireSmall() {
+    confetti({ particleCount: 40, spread: 60 });
+}
+
+function fireMedium() {
+    confetti({ particleCount: 80, spread: 120 });
+}
+
+function fireBig() {
+    confetti({ particleCount: 150, spread: 180 });
+}
+
+function firePink() {
+    confetti({
+        particleCount: 120,
+        spread: 160,
+        colors: ['#ff69b4', '#ff1493', '#ffc0cb']
+    });
+}
+
+function fireUltimate() {
+    let duration = 4000;
+    let end = Date.now() + duration;
+
+    let interval = setInterval(() => {
+        if (Date.now() > end) return clearInterval(interval);
+
+        confetti({
+            particleCount: 200,
+            spread: 360,
+            origin: { x: Math.random(), y: Math.random() - 0.2 }
+        });
+    }, 250);
+}
+
+// 根据类型触发
+function triggerEffect(type) {
+    switch(type) {
+        case "small": fireSmall(); break;
+        case "medium": fireMedium(); break;
+        case "big": fireBig(); break;
+        case "pink": firePink(); break;
+        case "ultimate": fireUltimate(); break;
+        default: fireMedium();
+    }
+}
+
+// ============================
+// 👀 监听访问数变化
+// ============================
 const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
-        if (mutation.addedNodes.length > 0) {
-            const countStr = mutation.target.innerText;
-            if (/^1+$/.test(countStr)) {
-                triggerFireworks();
-            }
+        const countStr = mutation.target.innerText;
+        const count = Number(countStr);
+
+        if (!isNaN(count) && milestones[count] && !triggeredSet.has(count)) {
+            triggeredSet.add(count);
+
+            const { message, type } = milestones[count];
+
+            triggerEffect(type);
+            showToast(`🎉 ${message}`);
         }
     });
 });
 
 const counterElement = document.getElementById('busuanzi_value_site_pv');
+
 if (counterElement) {
-    observer.observe(counterElement, { childList: true });
-}
-
-function triggerFireworks() {
-    var duration = 3 * 1000;
-    var animationEnd = Date.now() + duration;
-    var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
-
-    function randomInRange(min, max) { return Math.random() * (max - min) + min; }
-
-    var interval = setInterval(function() {
-        var timeLeft = animationEnd - Date.now();
-        if (timeLeft <= 0) { return clearInterval(interval); }
-        var particleCount = 50 * (timeLeft / duration);
-        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
-        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
-    }, 250);
+    observer.observe(counterElement, {
+        childList: true,
+        characterData: true,
+        subtree: true
+    });
 }
 
 // 获取页面上的 DOM 元素
