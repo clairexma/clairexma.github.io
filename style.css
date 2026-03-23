@@ -172,19 +172,18 @@ body {
 
 .heatmap-crop-box {
     width: 100%;
-    height: 145px; /* 核心：只给热力图留出高度，多余的藏起来 */
+    height: 145px;
     overflow-x: auto; /* 如果屏幕太小，允许左右滑动 */
-    overflow-y: hidden; /* 核心：隐藏垂直方向超出的部分（即上半部分的统计） */
+    overflow-y: hidden;
     border-radius: 10px;
-    /* 可选：加一点半透明背景，让边缘更好看 */
     background: rgba(255, 255, 255, 0.3); 
 }
 
 .leetcode-pure-heatmap {
-    width: 730px; /* 核心：必须固定宽度，防止图片缩放导致裁剪位置错乱 */
-    max-width: none; /* 覆盖可能存在的全局限制 */
+    width: 730px;
+    max-width: none;
     height: auto;
-    margin-top: -170px; /* 核心魔法：把整张图片往上拉 170px，刚好把上半部分藏起来！ */
+    margin-top: -170px;
     display: block;
     opacity: 0.95;
 }
